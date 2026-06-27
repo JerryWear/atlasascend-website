@@ -89,29 +89,43 @@ export function BentoGrid() {
         >
           {/* Atlas Brain — col-span-2 row-span-2 */}
           <motion.div variants={CARD_VARIANTS} className="col-span-2 row-span-2">
-            <GlassCard className="h-full p-6 flex flex-col lg:flex-row gap-4 overflow-hidden">
-              <div className="flex flex-col justify-between flex-1">
-                <div>
-                  <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                    Atlas Brain
-                  </span>
-                  <h3 className="font-playfair text-white text-2xl mt-2 leading-snug">
-                    Your daily
-                    <br />
-                    intelligence score
-                  </h3>
-                </div>
-                <div className="mt-4">
-                  <div className="font-playfair text-gold text-5xl font-bold">
-                    <AnimatedCounter value={34} duration={2.5} />
-                  </div>
-                  <div className="font-inter text-white-muted text-xs mt-1">
-                    Today&apos;s transformation score
-                  </div>
-                </div>
+            <GlassCard className="h-full overflow-hidden">
+              {/* Mobile: screenshot as full-bleed background */}
+              <div className="lg:hidden absolute inset-0">
+                <Image
+                  src={SCREENSHOTS.atlasBrain}
+                  alt="Atlas Brain"
+                  fill
+                  className="object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/80" />
               </div>
-              <div className="hidden lg:flex items-center justify-center flex-shrink-0">
-                <PhoneMockup src={SCREENSHOTS.atlasBrain} alt="Atlas Brain" treatment="glow" size="sm" />
+
+              {/* Content */}
+              <div className="relative z-10 h-full p-6 flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col justify-between flex-1">
+                  <div>
+                    <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
+                      Atlas Brain
+                    </span>
+                    <h3 className="font-playfair text-white text-2xl mt-2 leading-snug">
+                      Your daily
+                      <br />
+                      intelligence score
+                    </h3>
+                  </div>
+                  <div className="mt-4">
+                    <div className="font-playfair text-gold text-5xl font-bold">
+                      <AnimatedCounter value={34} duration={2.5} />
+                    </div>
+                    <div className="font-inter text-white-muted text-xs mt-1">
+                      Today&apos;s transformation score
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden lg:flex items-center justify-center flex-shrink-0">
+                  <PhoneMockup src={SCREENSHOTS.atlasBrain} alt="Atlas Brain" treatment="glow" size="sm" />
+                </div>
               </div>
             </GlassCard>
           </motion.div>
