@@ -128,6 +128,9 @@ function FeatureCard({ card }: { card: Card }) {
           alt={card.label}
           treatment={card.treatment}
           size="md"
+          tilt="right"
+          hover={true}
+          glowColor="rgba(212,165,116,0.10)"
         />
       </div>
     </div>

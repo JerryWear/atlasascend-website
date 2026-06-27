@@ -1,3 +1,6 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
 
 interface StatsContent {
@@ -41,7 +44,14 @@ export function StatsBar({ content }: { content?: unknown }) {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row justify-around items-center gap-8 sm:gap-0">
           {STATS.map((stat, i) => (
-            <div key={i} className="flex items-center">
+            <motion.div
+              key={i}
+              className="flex items-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true, margin: '-60px' }}
+            >
               <div className="text-center px-8">
                 <div className="font-playfair text-gold text-4xl lg:text-5xl font-bold leading-none">
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
@@ -55,7 +65,7 @@ export function StatsBar({ content }: { content?: unknown }) {
                   style={{ background: 'rgba(212,165,116,0.2)' }}
                 />
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

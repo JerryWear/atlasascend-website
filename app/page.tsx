@@ -3,9 +3,11 @@ import { Hero } from '@/components/sections/Hero'
 import { StatsBar } from '@/components/sections/StatsBar'
 import { TheProblem } from '@/components/sections/TheProblem'
 import { FeatureScroll } from '@/components/sections/FeatureScroll'
+import { AtlasBrainSection } from '@/components/sections/AtlasBrainSection'
+import { EcosystemSection } from '@/components/sections/EcosystemSection'
 import { FutureYouShowcase } from '@/components/sections/FutureYouShowcase'
 import { ConfidenceScore } from '@/components/sections/ConfidenceScore'
-import { CoachVoice } from '@/components/sections/CoachVoice'
+import { FounderStory } from '@/components/sections/FounderStory'
 import { BentoGrid } from '@/components/sections/BentoGrid'
 import { EarlyAccess } from '@/components/sections/EarlyAccess'
 import { Footer } from '@/components/sections/Footer'
@@ -27,9 +29,11 @@ export default async function Home() {
       <StatsBar content={cms.stats} />
       <TheProblem />
       <FeatureScroll cards={Array.isArray(cms.features) ? cms.features : undefined} />
+      <AtlasBrainSection />
+      <EcosystemSection />
       <FutureYouShowcase />
       <ConfidenceScore />
-      <CoachVoice content={cms.coach_quote} />
+      <FounderStory />
       <BentoGrid />
       <EarlyAccess content={cms.early_access} />
       <Footer content={cms.footer} />

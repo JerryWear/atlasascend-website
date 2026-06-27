@@ -9,6 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 type Treatment = 'float' | 'glow' | 'scroll' | 'reveal'
+type Tilt = 'left' | 'right' | 'none'
 
 interface PhoneMockupProps {
   src: string
@@ -17,9 +18,20 @@ interface PhoneMockupProps {
   size?: 'sm' | 'md' | 'lg'
   priority?: boolean
   className?: string
+  tilt?: Tilt
+  glowColor?: string
+  hover?: boolean
 }
 
 const WIDTHS = { sm: 260, md: 300, lg: 360 }
+
+const MULTI_SHADOW = [
+  '0 2px 4px rgba(0,0,0,0.35)',
+  '0 8px 16px rgba(0,0,0,0.45)',
+  '0 24px 48px rgba(0,0,0,0.55)',
+  '0 48px 96px rgba(0,0,0,0.35)',
+  '0 0 0 0.5px rgba(255,255,255,0.06) inset',
+].join(', ')
 
 function ScreenContent({
   src,
@@ -75,6 +87,9 @@ export function PhoneMockup({
   treatment = 'reveal',
   size = 'md',
   className = '',
+  tilt = 'none',
+  glowColor,
+  hover = false,
 }: PhoneMockupProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<HTMLDivElement>(null)
@@ -101,66 +116,109 @@ export function PhoneMockup({
     return () => ctx.revert()
   }, [treatment])
 
+  const tiltTransform =
+    tilt === 'left'
+      ? 'rotateY(4deg) rotateX(1deg)'
+      : tilt === 'right'
+      ? 'rotateY(-4deg) rotateX(1deg)'
+      : undefined
+
   const frame = (
     <div
       ref={containerRef}
       className={`relative inline-block ${className}`}
-      style={{ width, height }}
+      style={{
+        width,
+        height,
+        perspective: tilt !== 'none' ? '1000px' : undefined,
+      }}
     >
-      {treatment === 'glow' && (
-        <motion.div
-          className="absolute inset-0 rounded-[44px] pointer-events-none"
+      {/* Coloured screen glow halo */}
+      {glowColor && (
+        <div
+          className="absolute pointer-events-none"
           style={{
-            background:
-              'radial-gradient(ellipse at center, rgba(212,165,116,0.25) 0%, transparent 70%)',
-            zIndex: -1,
-            transform: 'scale(1.3)',
+            inset: -50,
+            background: `radial-gradient(ellipse at center, ${glowColor} 0%, transparent 65%)`,
+            zIndex: 0,
           }}
-          animate={{ opacity: [0.3, 0.7, 0.3], scale: [0.95, 1.05, 0.95] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       )}
 
+      {/* 3D tilt wrapper */}
       <div
-        className="relative w-full h-full"
         style={{
-          borderRadius: 44,
-          border: '1.5px solid rgba(255,255,255,0.07)',
-          background: '#111',
-          overflow: 'hidden',
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          transformStyle: 'preserve-3d',
+          transform: tiltTransform,
+          transition: 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+          zIndex: 1,
         }}
       >
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-[#111]"
-          style={{ width: 90, height: 24, borderRadius: '0 0 14px 14px' }}
-        />
+        {/* Pulsing glow for 'glow' treatment */}
+        {treatment === 'glow' && (
+          <motion.div
+            className="absolute inset-0 rounded-[44px] pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(ellipse at center, rgba(212,165,116,0.25) 0%, transparent 70%)',
+              zIndex: -1,
+              transform: 'scale(1.3)',
+            }}
+            animate={{ opacity: [0.3, 0.7, 0.3], scale: [0.95, 1.05, 0.95] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        )}
 
+        {/* Phone frame */}
         <div
-          ref={frameRef}
-          className="absolute overflow-hidden"
-          style={{ inset: 4, borderRadius: 40, background: '#0a0a0a' }}
-        >
-          <ScreenContent src={src} alt={alt} imgRef={imgRef} treatment={treatment} />
-        </div>
-
-        <div
-          className="absolute inset-0 pointer-events-none z-10"
+          className="relative w-full h-full"
           style={{
             borderRadius: 44,
-            background:
-              'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%)',
+            border: '1.5px solid rgba(255,255,255,0.07)',
+            background: '#111',
+            overflow: 'hidden',
+            boxShadow: MULTI_SHADOW,
           }}
-        />
+        >
+          {/* Dynamic island */}
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 z-20 bg-[#111]"
+            style={{ width: 90, height: 24, borderRadius: '0 0 14px 14px' }}
+          />
 
-        <div
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20"
-          style={{
-            width: 100,
-            height: 4,
-            borderRadius: 2,
-            background: 'rgba(255,255,255,0.2)',
-          }}
-        />
+          {/* Screen content */}
+          <div
+            ref={frameRef}
+            className="absolute overflow-hidden"
+            style={{ inset: 4, borderRadius: 40, background: '#0a0a0a' }}
+          >
+            <ScreenContent src={src} alt={alt} imgRef={imgRef} treatment={treatment} />
+          </div>
+
+          {/* Glass reflection */}
+          <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              borderRadius: 44,
+              background:
+                'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%)',
+            }}
+          />
+
+          {/* Home indicator */}
+          <div
+            className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20"
+            style={{
+              width: 100,
+              height: 4,
+              borderRadius: 2,
+              background: 'rgba(255,255,255,0.2)',
+            }}
+          />
+        </div>
       </div>
     </div>
   )
@@ -183,6 +241,23 @@ export function PhoneMockup({
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: '-80px' }}
+        whileHover={
+          hover
+            ? { y: -8, rotateY: tilt === 'right' ? -6 : tilt === 'left' ? 6 : 2 }
+            : undefined
+        }
+        style={hover ? { transformStyle: 'preserve-3d' } : undefined}
+      >
+        {frame}
+      </motion.div>
+    )
+  }
+
+  if (hover) {
+    return (
+      <motion.div
+        whileHover={{ y: -8, rotateY: tilt === 'right' ? -6 : tilt === 'left' ? 6 : 2 }}
+        style={{ transformStyle: 'preserve-3d' }}
       >
         {frame}
       </motion.div>
