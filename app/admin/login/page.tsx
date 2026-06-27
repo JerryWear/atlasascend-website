@@ -1,24 +1,29 @@
 'use client'
 
-import { useState } from 'react'
-import { createClient } from '@/lib/supabase-browser'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 type State = 'idle' | 'loading' | 'sent' | 'error'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
   const [state, setState] = useState<State>('idle')
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    if (searchParams.get('error') === 'invalid_link') setState('error')
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || state === 'loading') return
     setState('loading')
 
-    const supabase = createClient()
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim().toLowerCase(),
       options: {
-        emailRedirectTo: 'https://atlasascend.app/admin',
+        emailRedirectTo: 'https://atlasascend.app/auth/callback',
       },
     })
 
