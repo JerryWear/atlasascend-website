@@ -4,21 +4,35 @@ import { motion } from 'framer-motion'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { WordReveal } from '@/components/ui/WordReveal'
 
-const CREDENTIALS = [
-  'Personal Trainer · 30+ yrs',
-  'Nutrition Coach',
-  'Mindfulness Practitioner',
-  'Competition Judge',
-  'Platform Builder',
-]
+interface FounderContent {
+  name?: string
+  title?: string
+  years?: string
+  years_label?: string
+  para1?: string
+  para2?: string
+  para3?: string
+  credentials?: string
+}
 
-const STORY_PARAGRAPHS = [
-  'For thirty years I stood on competition stages, trained alongside elite athletes, and guided hundreds of clients through the hardest transformations of their lives. I learned what works — and what always gets in the way.',
-  'The gap between knowing and doing is enormous. Most people don\'t lack motivation. They lack a system that shows up every single day, remembers everything, and adjusts in real time to who they actually are. That\'s what I built Atlas Ascend to be.',
-  'This isn\'t a fitness app. It\'s everything I know distilled into an intelligence layer — one that thinks like a coach, acts like one, and scales to meet you exactly where you are, whether you\'re starting over or chasing your next championship.',
-]
+export function FounderStory({ content }: { content?: unknown }) {
+  const c = (content as FounderContent) ?? {}
 
-export function FounderStory() {
+  const name = c.name ?? 'Zirunas Michailovas'
+  const title = c.title ?? 'Founder, Atlas Ascend'
+  const years = c.years ?? '30+'
+  const yearsLabel = c.years_label ?? 'Years of Coaching Experience'
+  const credentials = (c.credentials ?? 'Personal Trainer · 30+ yrs, Nutrition Coach, Mindfulness Practitioner, Competition Judge, Platform Builder')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+
+  const paragraphs = [
+    c.para1 ?? 'For thirty years I stood on competition stages, trained alongside elite athletes, and guided hundreds of clients through the hardest transformations of their lives. I learned what works — and what always gets in the way.',
+    c.para2 ?? "The gap between knowing and doing is enormous. Most people don't lack motivation. They lack a system that shows up every single day, remembers everything, and adjusts in real time to who they actually are. That's what I built Atlas Ascend to be.",
+    c.para3 ?? "This isn't a fitness app. It's everything I know distilled into an intelligence layer — one that thinks like a coach, acts like one, and scales to meet you exactly where you are, whether you're starting over or chasing your next championship.",
+  ]
+
   return (
     <section
       className="relative py-24 lg:py-32 px-6 lg:px-12 overflow-hidden"
@@ -43,13 +57,13 @@ export function FounderStory() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             viewport={{ once: true }}
           >
-            {/* Decorative "30" background number */}
+            {/* Decorative large number */}
             <div
               className="absolute -top-4 -left-4 font-playfair text-gold select-none pointer-events-none leading-none"
               style={{ fontSize: 200, opacity: 0.06, lineHeight: 1, zIndex: 0 }}
               aria-hidden="true"
             >
-              30
+              {years.replace('+', '')}
             </div>
 
             <GlassCard className="relative p-8 lg:p-10" hover={false}>
@@ -58,15 +72,15 @@ export function FounderStory() {
                   className="font-playfair text-gold leading-none mb-1"
                   style={{ fontSize: 64 }}
                 >
-                  30+
+                  {years}
                 </div>
                 <div className="font-inter text-white/60 text-sm mb-8">
-                  Years of Coaching Experience
+                  {yearsLabel}
                 </div>
 
                 {/* Credential pills */}
                 <div className="flex flex-wrap gap-2">
-                  {CREDENTIALS.map((cred) => (
+                  {credentials.map((cred) => (
                     <span
                       key={cred}
                       className="font-mono text-[10px] uppercase tracking-wide px-3 py-1.5 rounded-full"
@@ -107,7 +121,7 @@ export function FounderStory() {
 
             {/* Story paragraphs */}
             <div className="space-y-5">
-              {STORY_PARAGRAPHS.map((para, i) => (
+              {paragraphs.map((para, i) => (
                 <motion.p
                   key={i}
                   className="font-inter text-white-muted leading-relaxed"
@@ -127,7 +141,6 @@ export function FounderStory() {
               className="h-px"
               style={{
                 background: 'linear-gradient(to right, #d4a574, rgba(212,165,116,0.2))',
-                width: 60,
               }}
               initial={{ width: 0 }}
               whileInView={{ width: 60 }}
@@ -142,12 +155,8 @@ export function FounderStory() {
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="font-playfair text-white text-xl">
-                Žyrunas Michailovas
-              </div>
-              <div className="font-inter text-gold text-sm mt-1">
-                Founder, Atlas Ascend
-              </div>
+              <div className="font-playfair text-white text-xl">{name}</div>
+              <div className="font-inter text-gold text-sm mt-1">{title}</div>
             </motion.div>
           </div>
         </div>

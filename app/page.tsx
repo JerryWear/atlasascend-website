@@ -33,7 +33,7 @@ export default async function Home() {
       <EcosystemSection />
       <FutureYouShowcase />
       <ConfidenceScore />
-      <FounderStory />
+      <FounderStory content={cms.founder} />
       <BentoGrid />
       <EarlyAccess content={cms.early_access} />
       <Footer content={cms.footer} />

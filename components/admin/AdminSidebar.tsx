@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { href: '/admin/hero', label: 'Hero Section', icon: '✦' },
   { href: '/admin/stats', label: 'Stats Bar', icon: '◈' },
   { href: '/admin/features', label: 'Features', icon: '▦' },
-  { href: '/admin/coach-quote', label: 'Coach Quote', icon: '❝' },
+  { href: '/admin/founder', label: 'Founder Story', icon: '◎' },
   { href: '/admin/screenshots', label: 'Screenshots', icon: '⊟' },
   { href: '/admin/early-access', label: 'Early Access', icon: '◉' },
   { href: '/admin/footer', label: 'Footer', icon: '▭' },
