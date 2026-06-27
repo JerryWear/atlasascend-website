@@ -147,7 +147,7 @@ export function BentoGrid() {
               <ScreenshotOrPlaceholder
                 src={SCREENSHOTS.training}
                 alt="Training"
-                className="flex-1 mt-2"
+                className="flex-1 mt-2 min-h-[80px]"
               />
             </GlassCard>
           </motion.div>
@@ -161,7 +161,7 @@ export function BentoGrid() {
               <ScreenshotOrPlaceholder
                 src={SCREENSHOTS.nutrition}
                 alt="Nutrition"
-                className="flex-1 mt-2"
+                className="flex-1 mt-2 min-h-[80px]"
               />
             </GlassCard>
           </motion.div>
@@ -175,7 +175,7 @@ export function BentoGrid() {
               <ScreenshotOrPlaceholder
                 src={SCREENSHOTS.visionBoard}
                 alt="Vision Board"
-                className="flex-1 mt-2"
+                className="flex-1 mt-2 min-h-[80px]"
               />
             </GlassCard>
           </motion.div>
@@ -189,7 +189,7 @@ export function BentoGrid() {
               <ScreenshotOrPlaceholder
                 src={SCREENSHOTS.challenges}
                 alt="Challenges"
-                className="flex-1 mt-2"
+                className="flex-1 mt-2 min-h-[80px]"
               />
             </GlassCard>
           </motion.div>

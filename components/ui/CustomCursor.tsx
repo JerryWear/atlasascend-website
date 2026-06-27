@@ -16,23 +16,26 @@ export function CustomCursor() {
   useEffect(() => {
     setIsMounted(true)
 
+    const handleEnter = () => setIsHovering(true)
+    const handleLeave = () => setIsHovering(false)
+    const trackedEls: Element[] = []
+
     const moveCursor = (e: MouseEvent) => {
       mouseX.set(e.clientX - 5)
       mouseY.set(e.clientY - 5)
     }
 
-    const handleEnter = () => setIsHovering(true)
-    const handleLeave = () => setIsHovering(false)
-
-    window.addEventListener('mousemove', moveCursor)
-
     const addListeners = () => {
       document.querySelectorAll('a, button').forEach((el) => {
-        el.addEventListener('mouseenter', handleEnter)
-        el.addEventListener('mouseleave', handleLeave)
+        if (!trackedEls.includes(el)) {
+          el.addEventListener('mouseenter', handleEnter)
+          el.addEventListener('mouseleave', handleLeave)
+          trackedEls.push(el)
+        }
       })
     }
 
+    window.addEventListener('mousemove', moveCursor)
     addListeners()
 
     const observer = new MutationObserver(addListeners)
@@ -41,6 +44,10 @@ export function CustomCursor() {
     return () => {
       window.removeEventListener('mousemove', moveCursor)
       observer.disconnect()
+      trackedEls.forEach((el) => {
+        el.removeEventListener('mouseenter', handleEnter)
+        el.removeEventListener('mouseleave', handleLeave)
+      })
     }
   }, [mouseX, mouseY])
 
