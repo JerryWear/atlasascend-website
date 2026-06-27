@@ -54,19 +54,19 @@ export function Footer({ content }: { content?: unknown }) {
             </div>
             <ul className="space-y-2">
               {[
-                'Features',
-                'Future You',
-                'AI Coach',
-                'Challenges',
-                'Vision Board',
-                'Mind Center',
+                { label: 'Features',     href: '#features'     },
+                { label: 'Future You',   href: '#future-you'   },
+                { label: 'AI Coach',     href: '#features'     },
+                { label: 'Challenges',   href: '#early-access' },
+                { label: 'Vision Board', href: '#early-access' },
+                { label: 'Mind Center',  href: '#early-access' },
               ].map((link) => (
-                <li key={link}>
+                <li key={link.label}>
                   <Link
-                    href="#"
+                    href={link.href}
                     className="font-inter text-white-muted text-xs hover:text-gold transition-colors"
                   >
-                    {link}
+                    {link.label}
                   </Link>
                 </li>
               ))}

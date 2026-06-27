@@ -14,7 +14,7 @@ const STATS = [
 
 export function FutureYouShowcase() {
   return (
-    <section className="py-32 px-6 lg:px-12 overflow-hidden" style={{ background: '#080808' }}>
+    <section id="future-you" className="py-32 px-6 lg:px-12 overflow-hidden" style={{ background: '#080808' }}>
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <FadeUp className="text-center space-y-4 mb-16">

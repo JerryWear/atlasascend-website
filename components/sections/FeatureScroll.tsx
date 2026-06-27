@@ -249,6 +249,7 @@ export function FeatureScroll({ cards: cmsCards }: { cards?: CMSCard[] }) {
   return (
     <section
       ref={sectionRef}
+      id="features"
       className="feature-scroll-section relative"
       style={{ background: '#080808' }}
     >
