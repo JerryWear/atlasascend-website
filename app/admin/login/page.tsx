@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
 type State = 'idle' | 'loading' | 'sent' | 'error'
@@ -9,11 +8,6 @@ type State = 'idle' | 'loading' | 'sent' | 'error'
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
   const [state, setState] = useState<State>('idle')
-  const searchParams = useSearchParams()
-
-  useEffect(() => {
-    if (searchParams.get('error') === 'invalid_link') setState('error')
-  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
