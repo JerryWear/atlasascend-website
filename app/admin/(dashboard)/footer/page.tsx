@@ -8,6 +8,7 @@ interface FooterContent {
   sub_tagline: string
   copyright: string
   built_by: string
+  google_play_url: string
 }
 
 const DEFAULT: FooterContent = {
@@ -15,6 +16,7 @@ const DEFAULT: FooterContent = {
   sub_tagline: 'Built by a coach. Powered by AI.',
   copyright: '© 2026 Atlas Ascend. All rights reserved.',
   built_by: 'Built by Žyrunas Michailovas',
+  google_play_url: '',
 }
 
 const INPUT_STYLE = {
@@ -127,12 +129,26 @@ export default function AdminFooter() {
           />
         </div>
 
-        <div>
+        <div className="mb-4">
           <label className={LABEL_CLASS}>Built By</label>
           <input
             type="text"
             value={content.built_by}
             onChange={(e) => set('built_by')(e.target.value)}
+            className={INPUT_CLASS}
+            style={INPUT_STYLE}
+            onFocus={(e) => { e.currentTarget.style.borderColor = '#d4a574' }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(212,165,116,0.15)' }}
+          />
+        </div>
+
+        <div>
+          <label className={LABEL_CLASS}>Google Play URL</label>
+          <input
+            type="url"
+            value={content.google_play_url}
+            onChange={(e) => set('google_play_url')(e.target.value)}
+            placeholder="https://play.google.com/apps/internaltest/..."
             className={INPUT_CLASS}
             style={INPUT_STYLE}
             onFocus={(e) => { e.currentTarget.style.borderColor = '#d4a574' }}

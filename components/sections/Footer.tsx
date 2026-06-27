@@ -6,6 +6,7 @@ interface FooterContent {
   sub_tagline?: string
   copyright?: string
   built_by?: string
+  google_play_url?: string
 }
 
 function GooglePlayIcon() {
@@ -39,7 +40,7 @@ export function Footer({ content }: { content?: unknown }) {
               {c.sub_tagline ?? 'Built by a coach. Powered by AI.'}
             </div>
             <div className="mt-6">
-              <GoldButton variant="outline" href="#" size="sm">
+              <GoldButton variant="outline" href={c.google_play_url || '#'} size="sm">
                 <GooglePlayIcon />
                 Google Play
               </GoldButton>
@@ -103,7 +104,7 @@ export function Footer({ content }: { content?: unknown }) {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="#"
+                  href={c.google_play_url || '#'}
                   className="font-inter text-white-muted text-xs hover:text-gold transition-colors"
                 >
                   Download on Google Play
