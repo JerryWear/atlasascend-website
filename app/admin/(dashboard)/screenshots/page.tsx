@@ -7,6 +7,7 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
 
 const SLOTS = [
   { key: 'home', filename: 'home.png', label: 'Home' },
+  { key: 'atlasBrain', filename: 'atlas-brain.png', label: 'Atlas Brain' },
   { key: 'training', filename: 'training.png', label: 'Training' },
   { key: 'coaching', filename: 'coaching.png', label: 'Coaching' },
   { key: 'futureYou', filename: 'future-you.png', label: 'Future You' },
