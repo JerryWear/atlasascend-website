@@ -27,7 +27,7 @@ const CARDS: Card[] = [
       'Atlas knows your training history, nutrition, sleep, and goals. Every response is built around your actual data.',
     bullets: ['Full client profile injection', '7-day pattern awareness', 'Reasoning panel'],
     screenshot: SCREENSHOTS.coaching,
-    treatment: 'scroll',
+    treatment: 'reveal',
   },
   {
     label: 'PHYSIQUE ARCHITECT',
@@ -122,7 +122,7 @@ function FeatureCard({ card }: { card: Card }) {
       </div>
 
       {/* Phone */}
-      <div className="lg:w-1/2 flex justify-center order-1 lg:order-2">
+      <div className="flex-shrink-0 flex justify-center order-1 lg:order-2">
         <PhoneMockup
           src={card.screenshot}
           alt={card.label}

@@ -6,6 +6,7 @@ function storageUrl(filename: string): string {
 
 export const SCREENSHOTS = {
   home: storageUrl('home.png'),
+  atlasBrain: storageUrl('atlas-brain.png'),
   training: storageUrl('training.png'),
   coaching: storageUrl('coaching.png'),
   futureYou: storageUrl('future-you.png'),

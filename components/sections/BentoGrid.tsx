@@ -10,35 +10,40 @@ import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
 import { TypeWriter } from '@/components/ui/TypeWriter'
 import { SCREENSHOTS } from '@/lib/screenshots'
 
-function ScreenshotOrPlaceholder({
+function ScreenshotCard({
   src,
   alt,
+  label,
   className = '',
 }: {
   src: string
   alt: string
+  label: string
   className?: string
 }) {
   const [error, setError] = useState(false)
-  if (error) {
-    return (
-      <div
-        className={`flex items-center justify-center bg-black-3 border border-gold/20 rounded-xl ${className}`}
-      >
-        <span className="font-mono text-gold/50 text-xs text-center p-2">{alt}</span>
-      </div>
-    )
-  }
   return (
-    <div className={`relative overflow-hidden rounded-xl ${className}`}>
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        className="object-cover object-top"
-        onError={() => setError(true)}
-      />
-    </div>
+    <GlassCard className={`h-full relative overflow-hidden ${className}`}>
+      {!error ? (
+        <>
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover object-top"
+            onError={() => setError(true)}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/10 to-black/30" />
+        </>
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="font-mono text-gold/40 text-xs text-center px-4">{alt}</span>
+        </div>
+      )}
+      <div className="relative z-10 p-4">
+        <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">{label}</span>
+      </div>
+    </GlassCard>
   )
 }
 
@@ -98,7 +103,7 @@ export function BentoGrid() {
                 </div>
                 <div className="mt-4">
                   <div className="font-playfair text-gold text-5xl font-bold">
-                    <AnimatedCounter value={87} duration={2.5} />
+                    <AnimatedCounter value={34} duration={2.5} />
                   </div>
                   <div className="font-inter text-white-muted text-xs mt-1">
                     Today&apos;s transformation score
@@ -106,7 +111,7 @@ export function BentoGrid() {
                 </div>
               </div>
               <div className="hidden lg:flex items-center justify-center flex-shrink-0">
-                <PhoneMockup src={SCREENSHOTS.home} alt="Atlas Brain" treatment="glow" size="sm" />
+                <PhoneMockup src={SCREENSHOTS.atlasBrain} alt="Atlas Brain" treatment="glow" size="sm" />
               </div>
             </GlassCard>
           </motion.div>
@@ -140,72 +145,27 @@ export function BentoGrid() {
 
           {/* Training */}
           <motion.div variants={CARD_VARIANTS} className="col-span-1">
-            <GlassCard className="h-full p-4 flex flex-col justify-between overflow-hidden">
-              <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                Training Engine
-              </span>
-              <ScreenshotOrPlaceholder
-                src={SCREENSHOTS.training}
-                alt="Training"
-                className="flex-1 mt-2 min-h-[80px]"
-              />
-            </GlassCard>
+            <ScreenshotCard src={SCREENSHOTS.training} alt="Training" label="Training Engine" />
           </motion.div>
 
           {/* Nutrition */}
           <motion.div variants={CARD_VARIANTS} className="col-span-1">
-            <GlassCard className="h-full p-4 flex flex-col justify-between overflow-hidden">
-              <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                Nutrition
-              </span>
-              <ScreenshotOrPlaceholder
-                src={SCREENSHOTS.nutrition}
-                alt="Nutrition"
-                className="flex-1 mt-2 min-h-[80px]"
-              />
-            </GlassCard>
+            <ScreenshotCard src={SCREENSHOTS.nutrition} alt="Nutrition" label="Nutrition" />
           </motion.div>
 
           {/* Vision Board */}
           <motion.div variants={CARD_VARIANTS} className="col-span-1">
-            <GlassCard className="h-full p-4 flex flex-col justify-between overflow-hidden">
-              <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                Vision Board
-              </span>
-              <ScreenshotOrPlaceholder
-                src={SCREENSHOTS.visionBoard}
-                alt="Vision Board"
-                className="flex-1 mt-2 min-h-[80px]"
-              />
-            </GlassCard>
+            <ScreenshotCard src={SCREENSHOTS.visionBoard} alt="Vision Board" label="Vision Board" />
           </motion.div>
 
           {/* Challenges */}
           <motion.div variants={CARD_VARIANTS} className="col-span-1">
-            <GlassCard className="h-full p-4 flex flex-col justify-between overflow-hidden">
-              <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                Challenges
-              </span>
-              <ScreenshotOrPlaceholder
-                src={SCREENSHOTS.challenges}
-                alt="Challenges"
-                className="flex-1 mt-2 min-h-[80px]"
-              />
-            </GlassCard>
+            <ScreenshotCard src={SCREENSHOTS.challenges} alt="Challenges" label="Challenges" />
           </motion.div>
 
           {/* Mind Center — col-span-2 */}
           <motion.div variants={CARD_VARIANTS} className="col-span-2">
-            <GlassCard className="h-full p-4 overflow-hidden">
-              <span className="font-mono text-[10px] text-gold/70 uppercase tracking-widest">
-                Mind Center
-              </span>
-              <ScreenshotOrPlaceholder
-                src={SCREENSHOTS.mind}
-                alt="Mind Center"
-                className="h-32 mt-2"
-              />
-            </GlassCard>
+            <ScreenshotCard src={SCREENSHOTS.mind} alt="Mind Center" label="Mind Center" />
           </motion.div>
         </motion.div>
       </div>
