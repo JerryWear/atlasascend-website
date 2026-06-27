@@ -52,16 +52,10 @@ export default async function AdminDashboard() {
             <Link
               key={action.href}
               href={action.href}
-              className="block rounded-xl p-5 transition-all group"
+              className="block rounded-xl p-5 transition-all hover:bg-white/[0.03]"
               style={{
                 background: '#161616',
-                border: '1px solid rgba(212,165,116,0.1)',
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(212,165,116,0.3)'
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(212,165,116,0.1)'
+                border: '1px solid rgba(212,165,116,0.15)',
               }}
             >
               <div className="text-[#d4a574] text-sm font-semibold mb-1">{action.label}</div>
