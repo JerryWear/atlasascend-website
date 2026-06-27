@@ -10,19 +10,21 @@ export async function POST(request: Request) {
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
   )
 
-  const { error } = await supabase.auth.signInWithOtp({
+  const { error } = await supabase.auth.admin.generateLink({
+    type: 'magiclink',
     email: email.trim().toLowerCase(),
     options: {
-      emailRedirectTo: 'https://atlasascend.app/auth/callback',
+      redirectTo: 'https://atlasascend.app/auth/callback',
     },
   })
 
   if (error) {
-    console.error('Supabase signInWithOtp error:', error)
-    return NextResponse.json({ error: error.message, code: error.status }, { status: 400 })
+    console.error('generateLink error:', error)
+    return NextResponse.json({ error: error.message }, { status: 400 })
   }
 
   return NextResponse.json({ success: true })
