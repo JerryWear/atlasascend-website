@@ -42,7 +42,16 @@ function StatCard({
   )
 }
 
-export function Hero() {
+interface HeroContent {
+  label?: string
+  subheading?: string
+  cta_primary?: string
+  cta_primary_url?: string
+  cta_secondary?: string
+}
+
+export function Hero({ content }: { content?: unknown }) {
+  const c = (content as HeroContent) ?? {}
   const bgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -76,7 +85,7 @@ export function Hero() {
           <div className="lg:col-span-3 space-y-6">
             <FadeUp delay={0}>
               <span className="font-mono text-[11px] text-gold uppercase tracking-widest">
-                Personal Transformation OS
+                {c.label ?? 'Personal Transformation OS'}
               </span>
             </FadeUp>
 
@@ -99,20 +108,18 @@ export function Hero() {
                 className="font-inter text-white-muted max-w-md leading-relaxed"
                 style={{ fontSize: 17 }}
               >
-                Atlas Ascend combines AI coaching, physique transformation,
-                adaptive training, and deep nutrition intelligence into one
-                system — built around you.
+                {c.subheading ?? 'Atlas Ascend combines AI coaching, physique transformation, adaptive training, and deep nutrition intelligence into one system — built around you.'}
               </p>
             </FadeUp>
 
             <FadeUp delay={0.3}>
               <div className="flex flex-wrap gap-4">
-                <GoldButton variant="solid" href="#" size="lg">
+                <GoldButton variant="solid" href={c.cta_primary_url ?? '#'} size="lg">
                   <GooglePlayIcon />
-                  Get it on Google Play
+                  {c.cta_primary ?? 'Get it on Google Play'}
                 </GoldButton>
                 <GoldButton variant="outline" href="#early-access" size="lg">
-                  Join Early Access
+                  {c.cta_secondary ?? 'Join Early Access'}
                 </GoldButton>
               </div>
             </FadeUp>

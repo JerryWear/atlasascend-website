@@ -6,6 +6,14 @@ import { GoldButton } from '@/components/ui/GoldButton'
 import { GlassCard } from '@/components/ui/GlassCard'
 import { supabase } from '@/lib/supabase'
 
+interface EarlyAccessContent {
+  label?: string
+  heading?: string
+  subheading?: string
+  play_store_url?: string
+  form_label?: string
+}
+
 function GooglePlayIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -16,7 +24,7 @@ function GooglePlayIcon() {
 
 type FormState = 'idle' | 'loading' | 'success' | 'duplicate' | 'error'
 
-function EmailForm() {
+function EmailForm({ label }: { label?: string }) {
   const [email, setEmail] = useState('')
   const [state, setState] = useState<FormState>('idle')
 
@@ -53,7 +61,7 @@ function EmailForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <p className="font-inter text-white-muted text-xs mb-3">
-        iOS early access — be first to know
+        {label ?? 'iOS early access — be first to know'}
       </p>
       <div className="flex gap-2">
         <input
@@ -89,7 +97,9 @@ function EmailForm() {
   )
 }
 
-export function EarlyAccess() {
+export function EarlyAccess({ content }: { content?: unknown }) {
+  const c = (content as EarlyAccessContent) ?? {}
+
   return (
     <section
       id="early-access"
@@ -108,7 +118,7 @@ export function EarlyAccess() {
       <div className="relative max-w-2xl mx-auto space-y-8">
         <FadeUp>
           <span className="font-mono text-[11px] text-gold uppercase tracking-widest">
-            Now Available on Android
+            {c.label ?? 'Now Available on Android'}
           </span>
         </FadeUp>
 
@@ -117,9 +127,15 @@ export function EarlyAccess() {
             className="font-playfair text-gold-gradient leading-tight"
             style={{ fontSize: 'clamp(40px, 6vw, 80px)' }}
           >
-            Start your
-            <br />
-            transformation.
+            {c.heading ? (
+              c.heading
+            ) : (
+              <>
+                Start your
+                <br />
+                transformation.
+              </>
+            )}
           </h2>
         </FadeUp>
 
@@ -128,14 +144,13 @@ export function EarlyAccess() {
             className="font-inter text-white-muted max-w-lg mx-auto leading-relaxed"
             style={{ fontSize: 18 }}
           >
-            Download Atlas Ascend on Google Play today. iOS coming soon — join
-            the waitlist to be first.
+            {c.subheading ?? 'Download Atlas Ascend on Google Play today. iOS coming soon — join the waitlist to be first.'}
           </p>
         </FadeUp>
 
         <FadeUp delay={0.3}>
           <div className="flex flex-wrap justify-center gap-4">
-            <GoldButton variant="solid" href="#" size="lg">
+            <GoldButton variant="solid" href={c.play_store_url ?? '#'} size="lg">
               <GooglePlayIcon />
               Get it on Google Play
             </GoldButton>
@@ -147,7 +162,7 @@ export function EarlyAccess() {
 
         <FadeUp delay={0.4}>
           <GlassCard className="p-6 max-w-md mx-auto text-left">
-            <EmailForm />
+            <EmailForm label={c.form_label} />
           </GlassCard>
         </FadeUp>
       </div>

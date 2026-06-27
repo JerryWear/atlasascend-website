@@ -1,6 +1,13 @@
 import Link from 'next/link'
 import { GoldButton } from '@/components/ui/GoldButton'
 
+interface FooterContent {
+  tagline?: string
+  sub_tagline?: string
+  copyright?: string
+  built_by?: string
+}
+
 function GooglePlayIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -9,7 +16,9 @@ function GooglePlayIcon() {
   )
 }
 
-export function Footer() {
+export function Footer({ content }: { content?: unknown }) {
+  const c = (content as FooterContent) ?? {}
+
   return (
     <footer
       className="py-16 px-8"
@@ -23,9 +32,11 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="font-mono text-gold tracking-widest text-sm">ATLAS ASCEND</div>
-            <div className="font-inter text-white-muted text-xs mt-2">Personal Transformation OS</div>
+            <div className="font-inter text-white-muted text-xs mt-2">
+              {c.tagline ?? 'Personal Transformation OS'}
+            </div>
             <div className="font-inter text-white-muted text-xs mt-1">
-              Built by a coach. Powered by AI.
+              {c.sub_tagline ?? 'Built by a coach. Powered by AI.'}
             </div>
             <div className="mt-6">
               <GoldButton variant="outline" href="#" size="sm">
@@ -124,10 +135,10 @@ export function Footer() {
           style={{ borderTop: '1px solid rgba(212,165,116,0.1)' }}
         >
           <span className="font-inter text-white-muted text-xs">
-            © 2026 Atlas Ascend. All rights reserved.
+            {c.copyright ?? '© 2026 Atlas Ascend. All rights reserved.'}
           </span>
           <span className="font-inter text-white-muted text-xs">
-            Built by Žyrunas Michailovas
+            {c.built_by ?? 'Built by Žyrunas Michailovas'}
           </span>
         </div>
       </div>

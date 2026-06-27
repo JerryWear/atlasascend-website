@@ -134,7 +134,24 @@ function FeatureCard({ card }: { card: Card }) {
   )
 }
 
-export function FeatureScroll() {
+interface CMSCard {
+  label: string
+  title: string
+  description: string
+  bullets: string[]
+}
+
+export function FeatureScroll({ cards: cmsCards }: { cards?: CMSCard[] }) {
+  const ACTIVE_CARDS = cmsCards && cmsCards.length === 8
+    ? cmsCards.map((c, i) => ({
+        ...CARDS[i],
+        label: c.label,
+        title: c.title,
+        description: c.description,
+        bullets: c.bullets,
+      }))
+    : CARDS
+
   const sectionRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
@@ -175,7 +192,7 @@ export function FeatureScroll() {
               progressRef.current.style.width = `${progress * 100}%`
             }
             setActiveCard(
-              Math.min(CARDS.length - 1, Math.floor(progress * CARDS.length))
+              Math.min(ACTIVE_CARDS.length - 1, Math.floor(progress * ACTIVE_CARDS.length))
             )
           },
         },
@@ -189,7 +206,7 @@ export function FeatureScroll() {
     return (
       <section className="py-16 px-6" style={{ background: '#080808' }}>
         <div className="space-y-24">
-          {CARDS.map((card) => (
+          {ACTIVE_CARDS.map((card) => (
             <div key={card.label} className="flex flex-col items-center gap-8">
               <PhoneMockup
                 src={card.screenshot}
@@ -233,7 +250,7 @@ export function FeatureScroll() {
       style={{ background: '#080808' }}
     >
       <div ref={trackRef} className="flex will-change-transform">
-        {CARDS.map((card) => (
+        {ACTIVE_CARDS.map((card) => (
           <FeatureCard key={card.label} card={card} />
         ))}
       </div>
@@ -248,7 +265,7 @@ export function FeatureScroll() {
           />
         </div>
         <div className="flex justify-center gap-2">
-          {CARDS.map((_, i) => (
+          {ACTIVE_CARDS.map((_, i) => (
             <div
               key={i}
               className="rounded-full transition-all duration-300"
