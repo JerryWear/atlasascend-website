@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useLayoutEffect, useState } from 'react'
+import React, { useRef, useLayoutEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
@@ -44,9 +44,9 @@ function ScreenContent({
 
   if (treatment === 'scroll') {
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ref={imgRef as any}
+        ref={imgRef as React.RefObject<HTMLImageElement>}
         src={src}
         alt={alt}
         className="w-full object-cover object-top"

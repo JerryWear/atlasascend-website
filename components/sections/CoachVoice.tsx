@@ -12,7 +12,7 @@ export function CoachVoice() {
         style={{ fontSize: 180, lineHeight: 1, opacity: 0.06 }}
         aria-hidden="true"
       >
-        "
+        &ldquo;
       </div>
 
       <div className="relative max-w-4xl mx-auto">
