@@ -1,8 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
-
 type State = 'idle' | 'loading' | 'sent' | 'error'
 
 export default function AdminLogin() {
@@ -14,17 +12,16 @@ export default function AdminLogin() {
     if (!email || state === 'loading') return
     setState('loading')
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.trim().toLowerCase(),
-      options: {
-        emailRedirectTo: 'https://atlasascend.app/auth/callback',
-      },
+    const res = await fetch('/api/admin/send-magic-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.trim().toLowerCase() }),
     })
 
-    if (error) {
-      setState('error')
-    } else {
+    if (res.ok) {
       setState('sent')
+    } else {
+      setState('error')
     }
   }
 
